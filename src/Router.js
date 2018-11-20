@@ -5,6 +5,7 @@ import DebitPage from './components/DebitPage';
 import CreditPage from './components/CreditPage';
 import MyAccount from './components/MyAccount';
 import CurrentBudget from './components/CurrentBudget';
+import CompareMonths from './components/CompareMonths';
 
 const RouterComponent = () => {
     return (
@@ -35,6 +36,13 @@ const RouterComponent = () => {
                         key="currentBudget" 
                         component={CurrentBudget} 
                         title="Current Budget" 
+                    />
+                    <Scene 
+                        rightTitle="My Account"
+                        onRight={() => Actions.myAccount()}
+                        key="compareMonths" 
+                        component={CompareMonths} 
+                        title="Compare Budgets" 
                     />
                     <Scene 
                         key="myAccount"

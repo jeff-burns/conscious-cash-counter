@@ -14,7 +14,7 @@ class MyAccount extends Component {
                 </CardSection>
 
                 <CardSection>
-                    <Button>
+                    <Button onPress={() => Actions.compareMonths()}>
                         Compare Months
                     </Button>
                 </CardSection>
