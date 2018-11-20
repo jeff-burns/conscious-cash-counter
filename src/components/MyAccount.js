@@ -8,8 +8,8 @@ class MyAccount extends Component {
         return (
             <Card>
                 <CardSection>
-                    <Button>
-                        View Budget
+                    <Button onPress={() => Actions.currentBudget()}>
+                        View Current Budget
                     </Button>
                 </CardSection>
 

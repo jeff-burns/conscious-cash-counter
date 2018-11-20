@@ -4,6 +4,7 @@ import LoginForm from './components/LoginForm';
 import DebitPage from './components/DebitPage';
 import CreditPage from './components/CreditPage';
 import MyAccount from './components/MyAccount';
+import CurrentBudget from './components/CurrentBudget';
 
 const RouterComponent = () => {
     return (
@@ -27,6 +28,13 @@ const RouterComponent = () => {
                         key="creditPage" 
                         component={CreditPage} 
                         title="Credit to Budget" 
+                    />
+                    <Scene 
+                        rightTitle="My Account"
+                        onRight={() => Actions.myAccount()}
+                        key="currentBudget" 
+                        component={CurrentBudget} 
+                        title="Current Budget" 
                     />
                     <Scene 
                         key="myAccount"
