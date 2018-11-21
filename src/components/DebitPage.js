@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Actions } from 'react-native-router-flux';
 import { 
     Card, 
     CardSection, 
@@ -7,7 +8,6 @@ import {
     Confirm, 
     ConfirmNavModal 
 } from './common';
-import { Actions } from 'react-native-router-flux';
 
 class DebitPage extends Component {
     state = { 
