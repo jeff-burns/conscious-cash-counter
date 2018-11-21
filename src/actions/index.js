@@ -44,3 +44,12 @@ const loginUserSuccess = (dispatch, user) => {
     dispatch({ type: LOGIN_USER_SUCCESS, payload: user });
     Actions.main()
 };
+
+export const logoutUser = () => {
+    return () => {
+        firebase.auth().signOut()
+        .then(() => {
+            Actions.auth({ type: 'reset' });
+        });
+    };
+};

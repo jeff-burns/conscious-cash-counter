@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
-import { Card, CardSection, Button } from './common';
 import { Actions } from 'react-native-router-flux';
+import { connect } from "react-redux";
+import { logoutUser } from '../actions';
+import { Card, CardSection, Button } from './common';
 
 
 class MyAccount extends Component {
+
+    onLogoutPress() {
+        this.props.logoutUser();
+    }
+
     render() {
         return (
             <Card>
@@ -32,7 +39,7 @@ class MyAccount extends Component {
                 </CardSection>
 
                 <CardSection>
-                    <Button>
+                    <Button onPress={this.onLogoutPress.bind(this)}>
                         Logout
                     </Button>
                 </CardSection>
@@ -46,4 +53,4 @@ class MyAccount extends Component {
         );
     }
 }
-export default MyAccount;
+export default connect(null, { logoutUser })(MyAccount);
