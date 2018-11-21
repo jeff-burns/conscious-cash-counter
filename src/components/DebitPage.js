@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
-import { Card, CardSection, Input, Button } from './common';
+import { Card, CardSection, Input, Button, Confirm } from './common';
 
 class DebitPage extends Component {
+    state = { showModal: false };
+
+    onAccept() {
+        console.log('debited!')
+    }
+
+    onDecline() {
+        this.setState({ showModal: false });
+    }
+
     render() {
         return (
             <Card>
@@ -46,10 +56,19 @@ class DebitPage extends Component {
                 </CardSection>
 
                 <CardSection>
-                    <Button>
+                <Button onPress={() => this.setState({ showModal: !this.state.showModal })}>
                         Debit from Account
                     </Button>
                 </CardSection>
+
+                <Confirm
+                    visible={this.state.showModal}
+                    onAccept={this.onAccept.bind(this)}
+                    onDecline={this.onDecline.bind(this)}
+                >
+                    Are you sure you want to Debit this?
+                </Confirm>
+
             </Card>
         );
     }
