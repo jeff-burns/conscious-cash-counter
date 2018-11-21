@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 import { connect } from "react-redux";
 import { logoutUser } from '../actions';
-import { Card, CardSection, Button } from './common';
-
+import { Card, CardSection, Button, Confirm } from './common';
 
 class MyAccount extends Component {
+    state = { showModal: false };
 
-    onLogoutPress() {
+    onAccept() {
         this.props.logoutUser();
+    }
+
+    onDecline() {
+        this.setState({ showModal: false });
     }
 
     render() {
@@ -39,10 +43,18 @@ class MyAccount extends Component {
                 </CardSection>
 
                 <CardSection>
-                    <Button onPress={this.onLogoutPress.bind(this)}>
+                    <Button onPress={() => this.setState({ showModal: !this.state.showModal })}>
                         Logout
                     </Button>
                 </CardSection>
+
+                <Confirm
+                    visible={this.state.showModal}
+                    onAccept={this.onAccept.bind(this)}
+                    onDecline={this.onDecline.bind(this)}
+                >
+                    Are you sure you want to Logout?
+                </Confirm>
 
                 <CardSection>
                     <Button>
