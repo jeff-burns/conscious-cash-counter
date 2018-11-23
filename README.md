@@ -18,7 +18,7 @@ Link to [demo or Repo](https://github.com/jeff-burns/)
 
 ## Wireframes
 
-![](/wireframes/Screen Shot 2018-11-05 at 6.22.48 PM.png)
+![](https://github.com/jeff-burns/conscious-cash-counter/blob/master/wireframes/Screen%20Shot%202018-11-05%20at%206.22.48%20PM.png)
 
 ## User DB Schema
 
