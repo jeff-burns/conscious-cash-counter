@@ -18,7 +18,7 @@ Link to [demo or Repo](https://github.com/jeff-burns/)
 
 ## Wireframes
 
-![]('/wireframes/Screen Shot 2018-11-05 at 6.22.48 PM.png')
+![](/wireframes/Screen Shot 2018-11-05 at 6.22.48 PM.png)
 
 ## User DB Schema
 
