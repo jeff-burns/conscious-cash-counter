@@ -13,22 +13,24 @@ export const usersFetch = () => {
   };
 };
 
-export const userUpdate = ({ prop, value, amount, date, type, note, repeating }) => {
-  const { currentUser } = firebase.auth();
-
+export const userUpdate = ({ prop, value }) => {
   // if (currentUser == currentUser.uid) {
     return {
       type: USER_UPDATE,
       payload: { prop, value }
     };
-  // }
-  // return (dispatch) => {
-  //   firebase.database().ref(`/users/${currentUser.uid}/`)
-  //       .push({ amount, date, type, note, repeating })
-  //       .then(() => {
-  //           dispatch({ type: USER_UPDATE });
-  //           Actions.pop();
-  //       });
-  //};
+  };
+
+export const userCreate = ({ amount, date, type, note, repeating }) => {
+  const { currentUser } = firebase.auth();
+
+  return (dispatch) => {
+    firebase.database().ref(`/users/${currentUser.uid}/`)
+        .push({ amount, date, type, note, repeating })
+        .then(() => {
+            dispatch({ type: USER_UPDATE });
+            Actions.pop();
+        });
+  };
   
 };

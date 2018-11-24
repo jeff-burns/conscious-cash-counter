@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, Picker } from 'react-native';
 import { connect } from 'react-redux';
-import { loginUser, userUpdate, usersFetch } from '../actions';
+import { loginUser, userUpdate, usersFetch, userCreate } from '../actions';
 import { Actions } from 'react-native-router-flux';
 import { 
     Card, 
@@ -21,18 +21,20 @@ class DebitPage extends Component {
 
     componentWillMount() {
         this.props.usersFetch();
+        // const { users } = this.props;
         // this.setState({ users })
     }
 
-    onButtonPress() {
-        this.onAccept()
-        this.setState({ showConfirmDebitModal: !this.state.showConfirmDebitModal });
-    }
+    // onButtonPress() {
+    //     this.setState({ showConfirmDebitModal: !this.state.showConfirmDebitModal });
+
+    //     this.onAccept();
+    // }
 
     onAccept() {
         console.log('debited!')
         const { amount, date, type, note, repeating } = this.props;
-        this.props.userUpdate({ amount, date, type, note, repeating })
+        this.props.userCreate({ amount, date, type, note, repeating })
         this.setState({ showConfirmDebitModal: false, showNavModal: true })
     }
 
@@ -67,6 +69,7 @@ class DebitPage extends Component {
                     <BudgetInput
                         label="Expense Amount"
                         placeholder="Round Up - 54.32 is 55"
+                        keyboardType="numeric"
                         value={this.props.amount}
                         onChangeText={value => this.props.userUpdate({ prop: 'amount', value })}
                     >
@@ -125,8 +128,8 @@ class DebitPage extends Component {
                 </CardSection>
 
                 <CardSection>
-                <Button onPress={ this.onButtonPress.bind(this)
-                    // () => this.setState({ showConfirmDebitModal: !this.state.showConfirmDebitModal })
+                <Button onPress={ 
+                    () => this.setState({ showConfirmDebitModal: !this.state.showConfirmDebitModal })
                 }>
                         Debit from Account
                     </Button>
@@ -168,4 +171,9 @@ const mapStateToProps = (state) => {
     
     return { amount, date, type, note, repeating };
     }
-export default connect(mapStateToProps, { loginUser, userUpdate, usersFetch })(DebitPage);
+export default connect(mapStateToProps, { 
+    loginUser, 
+    userUpdate, 
+    usersFetch, 
+    userCreate 
+})(DebitPage);
