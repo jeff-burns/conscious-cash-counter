@@ -3,6 +3,7 @@ import { Actions } from 'react-native-router-flux';
 import { 
     Card, 
     CardSection, 
+    BudgetInput,
     Input, 
     Button, 
     Confirm, 
@@ -48,11 +49,11 @@ class CreditPage extends Component {
         return (
             <Card>
                 <CardSection>
-                    <Input
+                    <BudgetInput
                         label="Income Amount"
                         placeholder="Round Down - 54.72 is 54"
                     >
-                    </Input>
+                    </BudgetInput>
                 </CardSection>
 
                 <CardSection>
@@ -72,11 +73,11 @@ class CreditPage extends Component {
                 </CardSection>
 
                 <CardSection>
-                    <Input
+                    <BudgetInput
                         label="Notes on Income"
-                        placeholder="website for sister"
+                        placeholder="sold couch on craigslist"
                     >
-                    </Input>
+                    </BudgetInput>
                 </CardSection>
 
                 <CardSection>

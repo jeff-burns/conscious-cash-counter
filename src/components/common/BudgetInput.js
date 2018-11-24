@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput, View, Text } from 'react-native';
 
-const Input = ({ label, value, onChangeText, placeholder, secureTextEntry }) => {
+const BudgetInput = ({ label, value, onChangeText, placeholder, secureTextEntry }) => {
     const { inputStyle, labelStyle, containerStyle } = styles;
 
     return (
@@ -26,7 +26,8 @@ const styles = {
         paddingLeft: 5,
         fontSize: 18,
         lineHeight: 23,
-        flex: 2
+        flex: 2,
+        width: '50%'
     },
     labelStyle: {
         fontSize: 18,
@@ -34,11 +35,11 @@ const styles = {
         flex: 1
     }, 
     containerStyle: {
-        height: 40,
+        height: 60,
         flex: 1,
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: 'center'
     }
 }
 
-export { Input };
+export { BudgetInput };
