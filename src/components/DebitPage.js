@@ -13,6 +13,7 @@ import {
     Confirm, 
     ConfirmNavModal 
 } from './common';
+import moment from 'moment';
 
 class DebitPage extends Component {
     state = { 
@@ -25,8 +26,9 @@ class DebitPage extends Component {
     }
 
     onAccept() {
+        const todaysDate = moment().format('YYYY-MM-DD');
         const { amount, date, type, note, repeating } = this.props;
-        this.props.userCreate({ amount, date, type: type || 'Groceries', note, repeating })
+        this.props.userCreate({ amount, date: date || todaysDate, type: type || 'Groceries', note, repeating })
         this.setState({ showConfirmDebitModal: false, showNavModal: true })
     }
 
@@ -36,7 +38,7 @@ class DebitPage extends Component {
 
     navToDebit() {
         this.setState({ showNavModal: false });
-        Actions.debitPage();
+        // Actions.debitPage();
     }
 
     navToCredit() {
@@ -69,18 +71,12 @@ class DebitPage extends Component {
                 </CardSection>
 
                 <CardSection>
-                    <Input
-                        label="Date"
-                        placeholder="Redo this with a Date Picker"
-                        value={this.props.date}
-                        onChangeText={value => this.props.userUpdate({ prop: 'date', value })}
-                    >
-                    </Input>
+                    
                     <DatePicker
                         style={{width: 200}}
                         date={this.state.date}
                         mode="date"
-                        placeholder="select date"
+                        placeholder="Select Date"
                         format="YYYY-MM-DD"
                         minDate="2018-01-01"
                         // maxDate="2016-06-01"
@@ -100,6 +96,7 @@ class DebitPage extends Component {
                         }}
                         onDateChange={value => this.props.userUpdate({ prop: 'date', value })}
                         // (date) => {this.setState({date: date})}
+                        value={this.props.date}
                     />
                 </CardSection>
 
@@ -193,3 +190,12 @@ export default connect(mapStateToProps, {
     usersFetch, 
     userCreate 
 })(DebitPage);
+
+
+// <Input
+                    //     label="Date"
+                    //     placeholder="Redo this with a Date Picker"
+                    //     value={this.props.date}
+                    //     onChangeText={value => this.props.userUpdate({ prop: 'date', value })}
+                    // >
+                    // </Input>
