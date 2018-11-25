@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import firebase from 'firebase';
 import { Text, Picker } from 'react-native';
 import { connect } from 'react-redux';
-import { loginUser, userUpdate, usersFetch, userCreate } from '../actions';
+import { userUpdate, usersFetch, userCreate } from '../actions';
 import { Actions } from 'react-native-router-flux';
 import { 
     Card, 
@@ -20,21 +21,14 @@ class DebitPage extends Component {
     };
 
     componentWillMount() {
+        // this.getState
         this.props.usersFetch();
-        // const { users } = this.props;
-        // this.setState({ users })
     }
 
-    // onButtonPress() {
-    //     this.setState({ showConfirmDebitModal: !this.state.showConfirmDebitModal });
-
-    //     this.onAccept();
-    // }
-
     onAccept() {
-        console.log('debited!')
+        
         const { amount, date, type, note, repeating } = this.props;
-        this.props.userCreate({ amount, date, type, note, repeating })
+        this.props.userCreate({ amount, date, type: type || 'Groceries', note, repeating })
         this.setState({ showConfirmDebitModal: false, showNavModal: true })
     }
 
@@ -171,8 +165,7 @@ const mapStateToProps = (state) => {
     
     return { amount, date, type, note, repeating };
     }
-export default connect(mapStateToProps, { 
-    loginUser, 
+export default connect(mapStateToProps, {  
     userUpdate, 
     usersFetch, 
     userCreate 

@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
-import { USER_UPDATE, USERS_FETCH_SUCCESS } from "./types";
+import { USER_UPDATE, USERS_FETCH_SUCCESS, USER_CREATE } from "./types";
 
 export const usersFetch = () => {
   const { currentUser } = firebase.auth();
@@ -14,7 +14,6 @@ export const usersFetch = () => {
 };
 
 export const userUpdate = ({ prop, value }) => {
-  // if (currentUser == currentUser.uid) {
     return {
       type: USER_UPDATE,
       payload: { prop, value }
@@ -23,13 +22,15 @@ export const userUpdate = ({ prop, value }) => {
 
 export const userCreate = ({ amount, date, type, note, repeating }) => {
   const { currentUser } = firebase.auth();
+  const uid = currentUser.uid;
+  const email = currentUser.email;
 
   return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/`)
-        .push({ amount, date, type, note, repeating })
+        .push({ uid, email, amount, date, type, note, repeating })
         .then(() => {
-            dispatch({ type: USER_UPDATE });
-            Actions.pop();
+            dispatch({ type: USER_CREATE });
+            // Actions.pop();
         });
   };
   
