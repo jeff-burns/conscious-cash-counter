@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import firebase from 'firebase';
 import { Text, Picker } from 'react-native';
 import { connect } from 'react-redux';
 import { userUpdate, usersFetch, userCreate } from '../actions';
 import { Actions } from 'react-native-router-flux';
+import DatePicker from 'react-native-datepicker';
 import { 
     Card, 
     CardSection, 
@@ -21,12 +21,10 @@ class DebitPage extends Component {
     };
 
     componentWillMount() {
-        // this.getState
         this.props.usersFetch();
     }
 
     onAccept() {
-        
         const { amount, date, type, note, repeating } = this.props;
         this.props.userCreate({ amount, date, type: type || 'Groceries', note, repeating })
         this.setState({ showConfirmDebitModal: false, showNavModal: true })
@@ -78,6 +76,31 @@ class DebitPage extends Component {
                         onChangeText={value => this.props.userUpdate({ prop: 'date', value })}
                     >
                     </Input>
+                    <DatePicker
+                        style={{width: 200}}
+                        date={this.state.date}
+                        mode="date"
+                        placeholder="select date"
+                        format="YYYY-MM-DD"
+                        minDate="2018-01-01"
+                        // maxDate="2016-06-01"
+                        confirmBtnText="Confirm"
+                        cancelBtnText="Cancel"
+                        customStyles={{
+                        dateIcon: {
+                            position: 'absolute',
+                            left: 0,
+                            top: 4,
+                            marginLeft: 0
+                        },
+                        dateInput: {
+                            marginLeft: 36
+                        }
+                        // ... You can check the source to find the other keys.
+                        }}
+                        onDateChange={value => this.props.userUpdate({ prop: 'date', value })}
+                        // (date) => {this.setState({date: date})}
+                    />
                 </CardSection>
 
                 <CardSection style={{ flexDirection: 'column' }}>
