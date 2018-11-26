@@ -27,7 +27,8 @@ const styles = {
         fontSize: 18,
         lineHeight: 23,
         flex: 2,
-        width: '50%'
+        width: '80%',
+        alignSelf: 'center'
     },
     labelStyle: {
         fontSize: 18,
