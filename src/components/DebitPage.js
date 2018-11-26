@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { Text, Picker } from "react-native";
 import { connect } from "react-redux";
-import { userUpdate, usersFetch, userCreate } from "../actions";
+import { userDebitUpdate, usersFetch, userDebitCreate } from "../actions";
 import { Actions } from "react-native-router-flux";
 import DatePicker from "react-native-datepicker";
 import {
   Card,
   CardSection,
-  Input,
   BudgetInput,
   Button,
   Confirm,
@@ -15,33 +14,33 @@ import {
 } from "./common";
 import moment from "moment";
 
+//CREDIT
 class DebitPage extends Component {
-    
   state = {
+    isDebitOrCredit: 'debit', //CREDIT
     showConfirmDebitModal: false,
     showNavModal: false,
     pickedDate: ''
   };
 
+  // For use when autofill is available
   componentWillMount() {
     this.props.usersFetch();
   }
 
-//   datePick() {
-//               this.props.userUpdate({ prop: "date", value: this.state.pickedDate })
-//   }
-
   onAccept() {
-    const todaysDate = moment().format("YYYY-MM-DD");
+    const todaysDate = moment().format("MMMM DD YYYY");
     const pickedDate = this.state.pickedDate;
-    const { amount, type, note, repeating } = this.props;
-    this.props.userUpdate({ prop: "date", value: this.state.pickedDate })
-    this.props.userCreate({
-      amount,
-      date: pickedDate || todaysDate,
-      type: type || "Groceries",
-      note,
-      repeating
+    const debitProp = this.state.isDebitOrCredit; //CREDIT
+    const { debitAmount, debitType, debitNote, debitRepeating } = this.props;
+    this.props.userDebitUpdate({ prop: "debitDate", value: this.state.pickedDate })
+    this.props.userDebitCreate({
+      debitProp, //CREDIT
+      debitAmount,
+      debitDate: pickedDate || todaysDate,
+      debitType: debitType || "Groceries", //CREDIT
+      debitNote,
+      debitRepeating
     });
     this.setState({ showConfirmDebitModal: false, showNavModal: true });
   }
@@ -51,11 +50,11 @@ class DebitPage extends Component {
   }
 
   navToDebit() {
-    this.setState({ showNavModal: false });
+    this.setState({ showNavModal: false }); //CREDIT
   }
 
   navToCredit() {
-    this.setState({ showNavModal: false });
+    this.setState({ showNavModal: false }); //CREDIT
     Actions.creditPage();
   }
 
@@ -74,12 +73,12 @@ class DebitPage extends Component {
       <Card>
         <CardSection>
           <BudgetInput
-            label="Expense Amount"
+            label="Expense Amount" //CREDIT
             placeholder="Round Up - 54.32 is 55"
             keyboardType="numeric"
-            value={this.props.amount}
+            value={this.props.debitAmount}
             onChangeText={value =>
-              this.props.userUpdate({ prop: "amount", value })
+              this.props.userDebitUpdate({ prop: "debitAmount", value })
             }
           />
         </CardSection>
@@ -109,18 +108,15 @@ class DebitPage extends Component {
             }}
             onDateChange={(value) => {this.setState({ pickedDate: value })}
             }
-            // (date) => {this.setState({date: date})}
-            // value={this.props.date}
           />
         </CardSection>
-
+        
         <CardSection style={{ flexDirection: "column" }}>
-          <Text style={styles.pickerLabelStyle}>Expense Type</Text>
+          <Text style={styles.pickerLabelStyle}>Expense Type</Text> 
           <Picker
-            // style={{ height: 50, width: 100 }}
-            selectedValue={this.props.type}
+            selectedValue={this.props.debitType}
             onValueChange={value =>
-              this.props.userUpdate({ prop: "type", value })
+              this.props.userDebitUpdate({ prop: "debitType", value })
             }
           >
             <Picker.Item label="Groceries" value="Groceries" />
@@ -141,10 +137,10 @@ class DebitPage extends Component {
         <CardSection>
           <BudgetInput
             label="Notes on Expense"
-            placeholder="Trader Joe's"
-            value={this.props.note}
+            placeholder="Trader Joe's" //CREDIT
+            value={this.props.debitNote}
             onChangeText={value =>
-              this.props.userUpdate({ prop: "note", value })
+              this.props.userDebitUpdate({ prop: "debitNote", value })
             }
           />
         </CardSection>
@@ -192,24 +188,24 @@ const styles = {
 
 const mapStateToProps = state => {
   console.log(state);
-  const { amount, date, type, note, repeating } = state.userForm;
+  const { debitProp, debitAmount, debitDate, debitType, debitNote, debitRepeating } = state.userForm; //CREDIT
 
-  return { amount, date, type, note, repeating };
+  return { debitProp, debitAmount, debitDate, debitType, debitNote, debitRepeating }; //CREDIT
 };
 export default connect(
   mapStateToProps,
   {
-    userUpdate,
+    userDebitUpdate,
     usersFetch,
-    userCreate
+    userDebitCreate
   }
-)(DebitPage);
+)(DebitPage); //CREDIT
 
 // <Input
 //     label="Date"
 //     placeholder="Redo this with a Date Picker"
 //     value={this.props.date}
-//     onChangeText={value => this.props.userUpdate({ prop: 'date', value })}
+//     onChangeText={value => this.props.userDebitUpdate({ prop: 'date', value })}
 // >
 // </Input>
 
@@ -217,7 +213,7 @@ export default connect(
 //     label="Save as a Repeating Expense"
 //     placeholder="Check Box Here"
 //     value={this.props.repeating}
-//     onChangeText={value => this.props.userUpdate({ prop: 'repeating', value })}
+//     onChangeText={value => this.props.userDebitUpdate({ prop: 'repeating', value })}
 // >
 // </Input>
 
@@ -227,7 +223,7 @@ export default connect(
 //         style={styles.checkboxContainer}
 //         checked={this.state.checked}
 //         // () => this.setState({checked: !this.state.checked})
-//         onPress={value => this.props.userUpdate({ prop: 'repeating', value })}
+//         onPress={value => this.props.userDebitUpdate({ prop: 'repeating', value })}
 //         // color='#009688'
 //     />
 

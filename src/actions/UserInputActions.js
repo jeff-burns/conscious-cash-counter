@@ -1,6 +1,5 @@
 import firebase from 'firebase';
-import { Actions } from 'react-native-router-flux';
-import { USER_UPDATE, USERS_FETCH_SUCCESS, USER_CREATE } from "./types";
+import { USER_DEBIT_UPDATE, USER_CREDIT_UPDATE, USERS_FETCH_SUCCESS, USER_CREATE } from "./types";
 
 export const usersFetch = () => {
   const { currentUser } = firebase.auth();
@@ -13,25 +12,44 @@ export const usersFetch = () => {
   };
 };
 
-export const userUpdate = ({ prop, value }) => {
+export const userDebitUpdate = ({ prop, value }) => {
     return {
-      type: USER_UPDATE,
+      type: USER_DEBIT_UPDATE,
       payload: { prop, value }
     };
   };
 
-export const userCreate = ({ amount, date, type, note, repeating }) => {
+export const userCreditUpdate = ({ prop, value }) => {
+  return {
+    type: USER_CREDIT_UPDATE,
+    payload: { prop, value }
+  };
+};
+
+export const userDebitCreate = ({ debitProp, debitAmount, debitDate, debitType, debitNote, debitRepeating }) => {
   const { currentUser } = firebase.auth();
   const uid = currentUser.uid;
   const email = currentUser.email;
 
   return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/`)
-        .push({ uid, email, amount, date, type, note, repeating })
+        .push({ uid, email, debitProp, debitAmount, debitDate, debitType, debitNote, debitRepeating })
         .then(() => {
             dispatch({ type: USER_CREATE });
-            // Actions.pop();
         });
   };
-  
+};
+
+export const userCreditCreate = ({ creditProp, creditAmount, creditDate, creditType, creditNote, creditRepeating }) => {
+  const { currentUser } = firebase.auth();
+  const uid = currentUser.uid;
+  const email = currentUser.email;
+
+  return (dispatch) => {
+    firebase.database().ref(`/users/${currentUser.uid}/`)
+        .push({ uid, email, creditProp, creditAmount, creditDate, creditType, creditNote, creditRepeating })
+        .then(() => {
+            dispatch({ type: USER_CREATE });
+        });
+  };
 };
