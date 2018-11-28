@@ -19,6 +19,7 @@ class CurrentBudget extends Component {
         const currentBudget = () => {
             console.log(this.props.debitsTotal)
             return <DebitListItem 
+                        thisMonth={this.props.momentMonth}
                         incomeTotal={this.props.creditsTotal}
                         expenseTotal={this.props.debitsTotal}
                     />
@@ -119,7 +120,7 @@ const mapStateToProps = (state) => {
     
 
     console.log(debitAmountsArray, creditsTotal, debitsTotal)
-    return { creditsTotal, debitsTotal }
+    return { creditsTotal, debitsTotal, momentMonth }
 }
 
 export default connect(mapStateToProps, { usersFetch })(CurrentBudget);
