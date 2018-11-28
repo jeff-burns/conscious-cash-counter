@@ -15,7 +15,7 @@ class DebitListItem extends Component {
 
         const dollarsLeftTotal = this.props.incomeTotal - this.props.expenseTotal
 
-        const dollarsPerDayLeft = dollarsLeftTotal / daysLeft
+        const dollarsPerDayLeft = Math.floor(dollarsLeftTotal / daysLeft)
 
         return (
                 
