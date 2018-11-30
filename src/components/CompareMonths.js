@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { FlatList, View, Text, StyleSheet, Dimensions } from 'react-native';
+import { FlatList, View, Text, StyleSheet, Dimensions, ImageBackground } from 'react-native';
 import { connect } from 'react-redux';
 import { usersFetch } from '../actions';
 import moment from 'moment';
@@ -56,12 +56,14 @@ class CompareMonths extends Component {
         ];
 
         return (
+            <ImageBackground source={require('../images/gradientsilverbackground.png')} style={{width: '100%', height: '100%'}}>
             <FlatList 
                 data={gridData}
                 style={styles.container}
                 renderItem={this.renderItem}
                 numColumns={numColumns}
             />
+            </ImageBackground>
         );
     }
 }
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
       marginVertical: 20,
     },
     item: {
-      backgroundColor: '#4D243D',
+      backgroundColor: 'gray',
       alignItems: 'center',
       justifyContent: 'center',
       flex: 1,

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, ImageBackground } from 'react-native';
 import { connect } from 'react-redux';
 import { usersFetch } from '../actions';
 import DebitListItem from './DebitListItem';
@@ -26,9 +26,11 @@ class CurrentBudget extends Component {
         }
 
         return (
+            <ImageBackground source={require('../images/gradientsilverbackground.png')} style={{width: '100%', height: '100%'}}>
             <View>
                 {currentBudget()}
             </View>
+            </ImageBackground>
         );
     }
 }

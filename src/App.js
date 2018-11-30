@@ -5,6 +5,9 @@ import firebase from 'firebase';
 import ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
 import Router from './Router';
+import configureStore from './configureStore';
+
+const store = configureStore();
 
 class App extends Component {
     componentWillMount() {
@@ -20,7 +23,9 @@ class App extends Component {
     }
 
   render() {
-      const store = createStore(reducers, {}, applyMiddleware(ReduxThunk))
+
+    
+
     return (
       <Provider store={store}>
         <Router />

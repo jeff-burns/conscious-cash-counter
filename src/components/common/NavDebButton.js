@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
-const Button = ({ onPress, children } ) => {
+const NavDebButton = ({ onPress, children } ) => {
     const { buttonStyle, textStyle } = styles;
     return (
         <TouchableOpacity onPress={onPress} style={buttonStyle}>
@@ -16,7 +16,7 @@ const Button = ({ onPress, children } ) => {
 const styles = {
     textStyle: {
         alignSelf: 'center',
-        color: '#007aff',
+        color: '#f90207',
         fontSize: 19,
         fontWeight: '600',
         paddingTop: 10,
@@ -25,13 +25,12 @@ const styles = {
     buttonStyle: {
         flex: 1,
         alignSelf: 'stretch',
-        backgroundColor: '#cccccc',
+        backgroundColor: '#535452',
         borderRadius: 5,
-        borderWidth: 4,
-        borderColor: '#007aff',
-        margin: 0,
-        padding: 0
+        borderWidth: 3,
+        borderColor: '#f90207',
+        margin: 0
     }
 }
 
-export { Button };
+export { NavDebButton };

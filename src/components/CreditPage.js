@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Text, Picker } from "react-native";
+import { Text, Picker, ImageBackground } from "react-native";
+import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import { connect } from "react-redux";
 import { userCreditUpdate, usersFetch, userCreditCreate } from "../actions";
 import { Actions } from "react-native-router-flux";
@@ -14,10 +15,10 @@ import {
 } from "./common";
 import moment from "moment";
 
-//CREDIT
+
 class CreditPage extends Component {
   state = {
-    isDebitOrCredit: 'credit', //CREDIT
+    isDebitOrCredit: 'credit', 
     showConfirmDebitModal: false,
     showNavModal: false,
     pickedDate: ''
@@ -31,14 +32,14 @@ class CreditPage extends Component {
   onAccept() {
     const todaysDate = moment().format("MMMM DD YYYY");
     const pickedDate = this.state.pickedDate;
-    const creditProp = this.state.isDebitOrCredit; //CREDIT
+    const creditProp = this.state.isDebitOrCredit; 
     const { creditAmount, creditType, creditNote, creditRepeating } = this.props;
     this.props.userCreditUpdate({ prop: "creditDate", value: this.state.pickedDate })
     this.props.userCreditCreate({
-      creditProp, //CREDIT
+      creditProp, 
       creditAmount,
       creditDate: pickedDate || todaysDate,
-      creditType: creditType || "Basic Income", //CREDIT
+      creditType: creditType || "Basic Income", 
       creditNote,
       creditRepeating
     });
@@ -50,13 +51,13 @@ class CreditPage extends Component {
   }
 
   navToDebit() {
-    this.setState({ showNavModal: false }); //CREDIT
+    this.setState({ showNavModal: false }); 
     Actions.debitPage();
 
   }
 
   navToCredit() {
-    this.setState({ showNavModal: false }); //CREDIT
+    this.setState({ showNavModal: false }); 
   }
 
   navToBudget() {
@@ -71,10 +72,11 @@ class CreditPage extends Component {
 
   render() {
     return (
+        <ImageBackground source={require('../images/gradientsilverbackground.png')} style={{width: '100%', height: '100%'}}>
       <Card>
-        <CardSection>
+        <CardSection style={styles.cardSectionStyle}>
           <BudgetInput
-            label="Income Amount" //CREDIT
+            label="Income Amount" 
             placeholder="Round Down - 54.72 is 54"
             keyboardType="numeric"
             value={this.props.creditAmount}
@@ -84,9 +86,10 @@ class CreditPage extends Component {
           />
         </CardSection>
 
-        <CardSection>
+        <CardSection style={styles.pickerCardSectionStyle}>
+          <Text style={styles.textLabelStyle}>Date</Text>
           <DatePicker
-            style={{ width: 350 }}
+            style={{ width: 325 }}
             // date={moment().format('MMMM DD YYYY')}
             mode="date"
             placeholder={this.state.pickedDate ? this.state.pickedDate : "Select Date"}
@@ -112,8 +115,8 @@ class CreditPage extends Component {
           />
         </CardSection>
         
-        <CardSection style={{ flexDirection: "column" }}>
-          <Text style={styles.pickerLabelStyle}>Income Type</Text> 
+        <CardSection  style={styles.pickerCardSectionStyle}>
+          <Text style={styles.textLabelStyle}>Income Type</Text> 
           <Picker
             selectedValue={this.props.creditType}
             onValueChange={value =>
@@ -128,10 +131,10 @@ class CreditPage extends Component {
           </Picker>
         </CardSection>
 
-        <CardSection>
+        <CardSection style={styles.cardSectionStyle}>
           <BudgetInput
-            label="Notes on Expense"
-            placeholder="Weekly Pay" //CREDIT
+            label="Notes on Income"
+            placeholder="Weekly Pay" 
             value={this.props.creditNote}
             onChangeText={value =>
               this.props.userCreditUpdate({ prop: "creditNote", value })
@@ -139,16 +142,33 @@ class CreditPage extends Component {
           />
         </CardSection>
 
-        <CardSection>
-          <Button
-            onPress={() =>
-              this.setState({
-                showConfirmDebitModal: !this.state.showConfirmDebitModal
-              })
-            }
-          >
-            Credit to Account
-          </Button>
+        <CardSection style={styles.buttonCardSectionStyle}>
+
+            <AwesomeButtonCartman 
+                type="anchor"
+                textColor="#21EB1A"
+                
+                borderColor="#21EB1A"
+                backgroundDarker="#17A412"
+                backgroundShadow="#0D5E0A"
+                width={360.5}
+                height={65}
+                textSize={22}
+                onPress={() => this.setState({showConfirmDebitModal: !this.state.showConfirmDebitModal})}
+                style={{
+                    flex: 1,
+                    marginLeft: 0,
+                    padding: 0,
+                    // backgroundShadow: '#007aff',
+                    // textShadowOffset: { width: 0, height: 2},
+                    // textShadowColor: "#7F0000"
+                }}
+            >
+                Credit to Account
+            </AwesomeButtonCartman>
+
+
+          
         </CardSection>
 
         <Confirm
@@ -169,22 +189,76 @@ class CreditPage extends Component {
           Where To?
         </ConfirmNavModal>
       </Card>
+      </ImageBackground>
     );
   }
 }
-
 const styles = {
-  pickerLabelStyle: {
-    fontSize: 19,
-    alignSelf: 'center'
+    textLabelStyle: {
+      fontSize: 18,
+      alignSelf: 'center',
+      fontWeight: 'bold'
+    },
+    cardSectionStyle: {
+      margin: 2,
+      borderWidth: 0,
+      paddingTop: 10,
+      paddingBottom: 10,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.5,
+      elevation: 2,
+      position: 'relative'
+    },
+    pickerCardSectionStyle: {
+      margin: 2,
+      borderWidth: 0,
+      paddingTop: 10,
+      paddingBottom: 10,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.5,
+      elevation: 2,
+      position: 'relative',
+      flexDirection: "column"
+    },
+    buttonCardSectionStyle: {
+      margin: 2,
+      borderWidth: 0,
+      padding: 0,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.5,
+      elevation: 2,
+      position: 'relative'
+    },
+    buttonTextStyle: {
+      justifyContent: 'center',
+      alignSelf: 'center',
+      color: 'white',
+      fontSize: 19,
+      fontWeight: '800',
+      paddingTop: 10,
+      paddingBottom: 10
+    },
+    creditButtonStyle: {
+      flex: 1,
+      alignSelf: 'stretch',
+      justifyContent: 'center',
+      backgroundColor: '#4ebc05',
+      borderRadius: 5,
+      borderWidth: 3,
+      borderColor: '#409649',
+      margin: 0,
+      height: 65
   }
 };
 
 const mapStateToProps = state => {
   console.log(state);
-  const { creditProp, creditAmount, creditDate, creditType, creditNote, creditRepeating } = state.userForm; //CREDIT
+  const { creditProp, creditAmount, creditDate, creditType, creditNote, creditRepeating } = state.userForm; 
 
-  return { creditProp, creditAmount, creditDate, creditType, creditNote, creditRepeating }; //CREDIT
+  return { creditProp, creditAmount, creditDate, creditType, creditNote, creditRepeating }; 
 };
 export default connect(
   mapStateToProps,
@@ -193,7 +267,21 @@ export default connect(
     usersFetch,
     userCreditCreate
   }
-)(CreditPage); //CREDIT
+)(CreditPage); 
+
+
+
+// <TouchableOpacity 
+//             style={styles.creditButtonStyle}
+//             onPress={() =>
+//                 this.setState({
+//                 showConfirmDebitModal: !this.state.showConfirmDebitModal
+//                 })
+//           }>
+//             <Text style={styles.buttonTextStyle}>
+//                 Credit to Account
+//             </Text>
+//           </TouchableOpacity>
 
 
 
