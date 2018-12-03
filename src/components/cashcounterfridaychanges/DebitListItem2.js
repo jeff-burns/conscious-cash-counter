@@ -6,85 +6,91 @@ import moment from 'moment';
 class DebitListItem extends Component {
     
     render() {
-        // const { compiledCredArray, compiledDebArray, compiledCredDebArrays } = this.props;
-        console.log(this.props)
-        const neededArray = this.props.arrayOfAllInfo[0]
-        // const today = moment().format('YYYY-MM')
+        console.log(this.props.expenseTotal)
+        const today = moment().format('YYYY-MM')
         const todayNumber = moment().format('D')
-        const thisMonth = neededArray.formattedDate
-        const daysLeft = neededArray.daysInMonth - todayNumber
-        const incomeTotal = neededArray.credMonthTotal
-        const expenseTotal = neededArray.debMonthTotal
-        const dollarsLeftTotal = neededArray.credMonthTotal - neededArray.debMonthTotal
+        const daysThisMonth = moment(today).daysInMonth()
+        const daysLeft = daysThisMonth - todayNumber
+        console.log(todayNumber, daysThisMonth, daysLeft)
+
+        const dollarsLeftTotal = this.props.incomeTotal - this.props.expenseTotal
 
         const dollarsPerDayLeft = Math.floor(dollarsLeftTotal / daysLeft)
 
+        // function moneyLeftPerDay(daysLeft, dollarsLeftTotal, dollarsPerDayLeft) {
+        //     if (daysLeft == 0) {
+        //         return dollarsLeftTotal
+        //     }
+        //     return dollarsPerDayLeft
+        // }
+
         return (
-            <Card style={{ backgroundColor: 'rgba(255,255,255,0.01)' }}>    
+            <Card style={{ backgroundColor: 'rgba(255,255,255,0.01)' }}>
+
                     <Card>
                         <CardSection style={styles.headerCardsectionStyle}>
-                            <Text style={styles.headerStyle}>Details for {thisMonth}</Text>
+                            <Text style={styles.headerStyle}>Details for {this.props.thisMonth}</Text>
                         </CardSection>
-                        </Card>
-
-                        <Card style={{ flexDirection: 'row', backgroundColor: 'rgba(255,255,255,0.01)', justifyContent: 'center',
-                        alignItems: 'space-between' }}>
-                            <Card style={styles.cardStyle}>
-                                <CardSection style={styles.topCardsectionStyle}>
-                                    <Text style={styles.titleStyle}>Total Income</Text>
-                                </CardSection>
-                                <CardSection style={styles.bottomCardsectionStyle}>
-                                    <Text style={styles.textStyle}>
-                                        ${incomeTotal}
-                                    </Text>
-                                </CardSection>
-                            </Card>
-                            <Card style={styles.cardStyle}>    
-                                <CardSection style={styles.topCardsectionStyle}>
-                                    <Text style={styles.titleStyle}>Total Expenses</Text>
-                                </CardSection>
-                                <CardSection style={styles.bottomCardsectionStyle}>
-                                    <Text style={styles.textStyle}>
-                                        ${expenseTotal}
-                                    </Text>
-                                </CardSection>
-                            </Card>
-                        </Card>
-    
-                        <Card style={styles.cardCenteredStyle}>        
-                            <CardSection style={styles.topCardsectionStyle}>
-                                <Text style={styles.titleStyle}>$ Left for Month</Text>
-                            </CardSection>
-                            <CardSection style={styles.bottomCardsectionStyle}>
-                                <Text style={styles.textStyle}>
-                                    ${dollarsLeftTotal}
-                                </Text>
-                            </CardSection>
-                        </Card>
-    
-                        <Card style={styles.cardCenteredStyle}>    
-                            <CardSection style={styles.topCardsectionStyle}>
-                                <Text style={styles.titleStyle}>Days Left in Month</Text>
-                            </CardSection>
-                            <CardSection style={styles.bottomCardsectionStyle}>
-                                <Text style={styles.textStyle}>
-                                    {daysLeft}
-                                </Text>
-                            </CardSection>
-                        </Card>
-    
-                        <Card style={styles.cardCenteredStyle}>    
-                            <CardSection style={styles.topCardsectionStyle}>
-                                <Text  style={styles.titleStyle}>$ Left per Day</Text>
-                            </CardSection>
-                            <CardSection style={styles.bottomCardsectionStyle}>
-                                <Text style={styles.textStyle}>
-                                    ${(daysLeft == 0) ? dollarsLeftTotal : dollarsPerDayLeft}
-                                </Text>
-                            </CardSection>
-                        </Card>
-    
                     </Card>
+
+                    <Card style={{ flexDirection: 'row', backgroundColor: 'rgba(255,255,255,0.01)', justifyContent: 'center',
+                    alignItems: 'space-between' }}>
+                        <Card style={styles.cardStyle}>
+                            <CardSection style={styles.topCardsectionStyle}>
+                                <Text style={styles.titleStyle}>Total Income</Text>
+                            </CardSection>
+                            <CardSection style={styles.bottomCardsectionStyle}>
+                                <Text style={styles.textStyle}>
+                                    ${this.props.incomeTotal}
+                                </Text>
+                            </CardSection>
+                        </Card>
+                        <Card style={styles.cardStyle}>    
+                            <CardSection style={styles.topCardsectionStyle}>
+                                <Text style={styles.titleStyle}>Total Expenses</Text>
+                            </CardSection>
+                            <CardSection style={styles.bottomCardsectionStyle}>
+                                <Text style={styles.textStyle}>
+                                    ${this.props.expenseTotal}
+                                </Text>
+                            </CardSection>
+                        </Card>
+                    </Card>
+
+                    <Card style={styles.cardCenteredStyle}>        
+                        <CardSection style={styles.topCardsectionStyle}>
+                            <Text style={styles.titleStyle}>$ Left for Month</Text>
+                        </CardSection>
+                        <CardSection style={styles.bottomCardsectionStyle}>
+                            <Text style={styles.textStyle}>
+                                ${dollarsLeftTotal}
+                            </Text>
+                        </CardSection>
+                    </Card>
+
+                    <Card style={styles.cardCenteredStyle}>    
+                        <CardSection style={styles.topCardsectionStyle}>
+                            <Text style={styles.titleStyle}>Days Left in Month</Text>
+                        </CardSection>
+                        <CardSection style={styles.bottomCardsectionStyle}>
+                            <Text style={styles.textStyle}>
+                                {daysLeft}
+                            </Text>
+                        </CardSection>
+                    </Card>
+
+                    <Card style={styles.cardCenteredStyle}>    
+                        <CardSection style={styles.topCardsectionStyle}>
+                            <Text  style={styles.titleStyle}>$ Left per Day</Text>
+                        </CardSection>
+                        <CardSection style={styles.bottomCardsectionStyle}>
+                            <Text style={styles.textStyle}>
+                                ${(daysLeft == 0) ? dollarsLeftTotal : dollarsPerDayLeft}
+                            </Text>
+                        </CardSection>
+                    </Card>
+
+                </Card>
         );
     }
 }

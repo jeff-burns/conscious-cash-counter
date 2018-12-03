@@ -32,6 +32,7 @@ class DebitPage extends Component {
   onAccept() {
     const todaysDate = moment().format("MMMM DD YYYY");
     const pickedDate = this.state.pickedDate;
+    const momentYYYYMM = moment(pickedDate, "MMMM DD YYYY").format("YYYYMM")
     const debitProp = this.state.isDebitOrCredit; 
     const { debitAmount, debitType, debitNote, debitRepeating } = this.props;
     this.props.userDebitUpdate({ prop: "debitDate", value: this.state.pickedDate })
@@ -39,6 +40,7 @@ class DebitPage extends Component {
       debitProp, 
       debitAmount,
       debitDate: pickedDate || todaysDate,
+      debitDateYYYYMM: momentYYYYMM,
       debitType: debitType || "Groceries", 
       debitNote,
       debitRepeating
@@ -263,9 +265,9 @@ const styles = {
 
 const mapStateToProps = state => {
   console.log(state);
-  const { debitProp, debitAmount, debitDate, debitType, debitNote, debitRepeating } = state.userForm; 
+  const { debitProp, debitAmount, debitDate, debitDateYYYYMM, debitType, debitNote, debitRepeating } = state.userForm; 
 
-  return { debitProp, debitAmount, debitDate, debitType, debitNote, debitRepeating }; 
+  return { debitProp, debitAmount, debitDate, debitDateYYYYMM, debitType, debitNote, debitRepeating }; 
 };
 export default connect(
   mapStateToProps,

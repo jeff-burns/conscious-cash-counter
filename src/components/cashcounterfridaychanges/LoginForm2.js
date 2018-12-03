@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, ImageBackground } from "react-native";
+import { View, Text, ImageBackground, Dimensions } from "react-native";
 import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import { connect } from "react-redux";
 import { emailChanged, passwordChanged, loginUser } from "../actions";
@@ -38,6 +38,7 @@ class LoginForm extends Component {
       return (
         <AwesomeButtonBlue 
             type="secondary"
+            backgroundColor="#D0E4FA"
             textColor="#007aff"
             borderColor="#007aff"
             backgroundDarker="#007acc"
@@ -92,18 +93,18 @@ class LoginForm extends Component {
   }
 }
 const styles = {
-  cardSectionStyle: {
-      width: '100%',
-      margin: 2,
-      borderWidth: 1,
-      paddingTop: 10,
-      paddingBottom: 10,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.5,
-      elevation: 2,
-      position: 'relative'
-    },
+    cardSectionStyle: {
+        width: '100%',
+        margin: 2,
+        borderWidth: 1,
+        paddingTop: 10,
+        paddingBottom: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.5,
+        elevation: 2,
+        position: 'relative'
+      },
   errorTextStyle: {
     fontSize: 20,
     alignSelf: "center",

@@ -26,28 +26,28 @@ export const userCreditUpdate = ({ prop, value }) => {
   };
 };
 
-export const userDebitCreate = ({ debitProp, debitAmount, debitDate, debitType, debitNote, debitRepeating }) => {
+export const userDebitCreate = ({ debitProp, debitAmount, debitDate, debitDateYYYYMM, debitType, debitNote, debitRepeating }) => {
   const { currentUser } = firebase.auth();
   const uid = currentUser.uid;
   const email = currentUser.email;
 
   return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/`)
-        .push({ uid, email, debitProp, debitAmount, debitDate, debitType, debitNote, debitRepeating })
+        .push({ uid, email, debitProp, debitAmount, debitDate, debitDateYYYYMM, debitType, debitNote, debitRepeating })
         .then(() => {
             dispatch({ type: USER_CREATE });
         });
   };
 };
 
-export const userCreditCreate = ({ creditProp, creditAmount, creditDate, creditType, creditNote, creditRepeating }) => {
+export const userCreditCreate = ({ creditProp, creditAmount, creditDate, creditDateYYYYMM, creditType, creditNote, creditRepeating }) => {
   const { currentUser } = firebase.auth();
   const uid = currentUser.uid;
   const email = currentUser.email;
 
   return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/`)
-        .push({ uid, email, creditProp, creditAmount, creditDate, creditType, creditNote, creditRepeating })
+        .push({ uid, email, creditProp, creditAmount, creditDate, creditDateYYYYMM, creditType, creditNote, creditRepeating })
         .then(() => {
             dispatch({ type: USER_CREATE });
         });

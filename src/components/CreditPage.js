@@ -32,6 +32,7 @@ class CreditPage extends Component {
   onAccept() {
     const todaysDate = moment().format("MMMM DD YYYY");
     const pickedDate = this.state.pickedDate;
+    const momentYYYYMM = moment(pickedDate, "MMMM DD YYYY").format("YYYYMM")
     const creditProp = this.state.isDebitOrCredit; 
     const { creditAmount, creditType, creditNote, creditRepeating } = this.props;
     this.props.userCreditUpdate({ prop: "creditDate", value: this.state.pickedDate })
@@ -39,6 +40,7 @@ class CreditPage extends Component {
       creditProp, 
       creditAmount,
       creditDate: pickedDate || todaysDate,
+      creditDateYYYYMM: momentYYYYMM,
       creditType: creditType || "Basic Income", 
       creditNote,
       creditRepeating
@@ -256,9 +258,9 @@ const styles = {
 
 const mapStateToProps = state => {
   console.log(state);
-  const { creditProp, creditAmount, creditDate, creditType, creditNote, creditRepeating } = state.userForm; 
+  const { creditProp, creditAmount, creditDate, creditDateYYYYMM, creditType, creditNote, creditRepeating } = state.userForm; 
 
-  return { creditProp, creditAmount, creditDate, creditType, creditNote, creditRepeating }; 
+  return { creditProp, creditAmount, creditDate, creditDateYYYYMM, creditType, creditNote, creditRepeating }; 
 };
 export default connect(
   mapStateToProps,
