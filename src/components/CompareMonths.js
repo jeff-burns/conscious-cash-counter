@@ -7,9 +7,6 @@ import moment from 'moment';
 
 const numColumns = 5;
 
-
-
-
 class CompareMonths extends Component {
 
     componentDidMount() {
@@ -41,10 +38,6 @@ class CompareMonths extends Component {
         )
         })
         console.log(gridData) 
-
-        
-
-        
 
         return (
             <ImageBackground source={require('../images/gradientsilverbackground.png')} style={{width: '100%', height: '100%'}}>
@@ -137,7 +130,7 @@ const styles = StyleSheet.create({
     
     let compiledDebArray = [];
     arrayOfObjectsTotalDebs.forEach((itm, i) => {
-    compiledDebArray.push(Object.assign({}, itm, formattedDebDatesArrObj[i]));
+        compiledDebArray.push(Object.assign({}, itm, formattedDebDatesArrObj[i]));
     });
     
     //CREDIT
@@ -189,11 +182,11 @@ const styles = StyleSheet.create({
 
     let compiledCredArray = [];
     arrayOfObjectsTotalCreds.forEach((itm, i) => {
-    compiledCredArray.push(Object.assign({}, itm, formattedCredDatesArrObj[i]));
+        compiledCredArray.push(Object.assign({}, itm, formattedCredDatesArrObj[i]));
     });
 
     let compiledCredDebArrays = [];
-    compiledCredArray.forEach((itm, i) => {
+        compiledCredArray.forEach((itm, i) => {
     compiledCredDebArrays.push(Object.assign({}, itm, compiledDebArray[i]));
     });
 

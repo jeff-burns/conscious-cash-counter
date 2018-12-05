@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, Picker, ImageBackground } from "react-native";
+import { Text, Picker, ImageBackground, View } from "react-native";
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import { connect } from "react-redux";
 import { userCreditUpdate, usersFetch, userCreditCreate } from "../actions";
@@ -17,12 +17,16 @@ import moment from "moment";
 
 
 class CreditPage extends Component {
-  state = {
+  constructor(props) {
+    super(props)
+    this.state = {
     isDebitOrCredit: 'credit', 
     showConfirmDebitModal: false,
     showNavModal: false,
-    pickedDate: ''
+    pickedDate: '',
+    // isAmount: true
   };
+}
 
   // For use when autofill is available
   componentWillMount() {
@@ -30,22 +34,32 @@ class CreditPage extends Component {
   }
 
   onAccept() {
-    const todaysDate = moment().format("MMMM DD YYYY");
-    const pickedDate = this.state.pickedDate;
-    const momentYYYYMM = moment(pickedDate, "MMMM DD YYYY").format("YYYYMM")
-    const creditProp = this.state.isDebitOrCredit; 
-    const { creditAmount, creditType, creditNote, creditRepeating } = this.props;
-    this.props.userCreditUpdate({ prop: "creditDate", value: this.state.pickedDate })
-    this.props.userCreditCreate({
-      creditProp, 
-      creditAmount,
-      creditDate: pickedDate || todaysDate,
-      creditDateYYYYMM: momentYYYYMM,
-      creditType: creditType || "Basic Income", 
-      creditNote,
-      creditRepeating
-    });
-    this.setState({ showConfirmDebitModal: false, showNavModal: true });
+          // todaysDate is useless, just using YYYYMM as the format until it is reformatted for display later 
+    if (!this.state.amountEntered) {
+      this.setState({ isAmount: false, showConfirmDebitModal: !this.state.showConfirmDebitModal, showNavModal: false })
+    } 
+    if (isNaN(this.state.amountEntered)) {
+      this.setState({ amountEntered: null, isAmount: false, showConfirmDebitModal: !this.state.showConfirmDebitModal, showNavModal: false })
+    }
+    else {
+      const todaysDate = moment().format("MMMM DD YYYY");
+      const todaysYYYYMM = moment().format("YYYYMM");
+      const pickedDate = this.state.pickedDate;
+      const creditProp = this.state.isDebitOrCredit; 
+      console.log(todaysDate, todaysYYYYMM)
+      const { creditAmount, creditType, creditNote, creditRepeating } = this.props;
+      this.props.userCreditUpdate({ prop: "creditDate", value: this.state.pickedDate })
+      this.props.userCreditCreate({
+        creditProp, 
+        creditAmount,
+        creditDate: pickedDate || todaysYYYYMM,
+        creditDateYYYYMM: pickedDate || todaysYYYYMM,
+        creditType: creditType || "Basic Income", 
+        creditNote,
+        creditRepeating
+      });
+      this.setState({ showConfirmDebitModal: false, pickedDate: '', showNavModal: true, isAmount: null });
+    }
   }
 
   onDecline() {
@@ -53,13 +67,12 @@ class CreditPage extends Component {
   }
 
   navToDebit() {
-    this.setState({ showNavModal: false }); 
+    this.setState({ showNavModal: false, amountEntered: null }); 
     Actions.debitPage();
-
   }
 
   navToCredit() {
-    this.setState({ showNavModal: false }); 
+    this.setState({ showNavModal: false, amountEntered: null }); 
   }
 
   navToBudget() {
@@ -72,6 +85,16 @@ class CreditPage extends Component {
     Actions.myAccount();
   }
 
+  renderError() {
+    if (this.state.isAmount === false) {
+      return (
+        <View style={{ backgroundColor: "white" }}>
+          <Text style={styles.errorTextStyle}>"Must enter a Number Amount"</Text>
+        </View>
+      );
+    } 
+  }
+
   render() {
     return (
         <ImageBackground source={require('../images/gradientsilverbackground.png')} style={{width: '100%', height: '100%'}}>
@@ -81,13 +104,19 @@ class CreditPage extends Component {
             label="Income Amount" 
             placeholder="Round Down - 54.72 is 54"
             keyboardType="numeric"
-            value={this.props.creditAmount}
-            onChangeText={value =>
-              this.props.userCreditUpdate({ prop: "creditAmount", value })
+            value={this.state.amountEntered}
+            onChangeText={value => {
+              this.setState({ amountEntered: value})
+              if(isNaN(this.state.amountEntered)) {
+                this.setState({ isAmount: false });
+              // this.props.userCreditUpdate({ prop: "creditAmount", value: null })
             }
+            this.props.userCreditUpdate({ prop: "creditAmount", value })
+          }
+          }
           />
         </CardSection>
-
+        {this.renderError()}
         <CardSection style={styles.pickerCardSectionStyle}>
           <Text style={styles.textLabelStyle}>Date</Text>
           <DatePicker
@@ -95,7 +124,7 @@ class CreditPage extends Component {
             // date={moment().format('MMMM DD YYYY')}
             mode="date"
             placeholder={this.state.pickedDate ? this.state.pickedDate : "Select Date"}
-            format="MMMM DD YYYY"
+            format="YYYYMM"
             minDate="2018-01-01"
             maxDate="2050-12-31"
             confirmBtnText="Confirm"
@@ -156,7 +185,8 @@ class CreditPage extends Component {
                 width={360.5}
                 height={65}
                 textSize={22}
-                onPress={() => this.setState({showConfirmDebitModal: !this.state.showConfirmDebitModal})}
+                onPress={() => {
+                  this.setState({showConfirmDebitModal: !this.state.showConfirmDebitModal})}}
                 style={{
                     flex: 1,
                     marginLeft: 0,
@@ -253,6 +283,11 @@ const styles = {
       borderColor: '#409649',
       margin: 0,
       height: 65
+  },
+  errorTextStyle: {
+    fontSize: 20,
+    alignSelf: "center",
+    color: "red"
   }
 };
 

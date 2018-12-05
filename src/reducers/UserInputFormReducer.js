@@ -25,7 +25,7 @@ export default (state = INITIAL_STATE, action) => {
         // action.payload === { prop: 'name', value: 'jane' }
         return { ...state, [action.payload.prop]: action.payload.value };
     case USER_CREATE:
-        return INITIAL_STATE ;
+        return { ...INITIAL_STATE, error: ''} ;
     default:
       return state;
   }

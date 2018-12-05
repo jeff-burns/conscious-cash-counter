@@ -35,10 +35,11 @@ export const userDebitCreate = ({ debitProp, debitAmount, debitDate, debitDateYY
     firebase.database().ref(`/users/${currentUser.uid}/`)
         .push({ uid, email, debitProp, debitAmount, debitDate, debitDateYYYYMM, debitType, debitNote, debitRepeating })
         .then(() => {
-            dispatch({ type: USER_CREATE });
+          dispatch({ type: USER_CREATE });
         });
   };
 };
+
 
 export const userCreditCreate = ({ creditProp, creditAmount, creditDate, creditDateYYYYMM, creditType, creditNote, creditRepeating }) => {
   const { currentUser } = firebase.auth();

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, Picker, ImageBackground } from "react-native";
+import { Text, Picker, ImageBackground, View } from "react-native";
 import AwesomeButtonCartman from 'react-native-really-awesome-button/src/themes/cartman';
 import { connect } from "react-redux";
 import { userDebitUpdate, usersFetch, userDebitCreate } from "../actions";
@@ -15,49 +15,63 @@ import {
 } from "./common";
 import moment from "moment";
 
-
 class DebitPage extends Component {
-  state = {
+  constructor(props) {
+  super(props)
+  this.state = {
     isDebitOrCredit: 'debit', 
     showConfirmDebitModal: false,
     showNavModal: false,
-    pickedDate: ''
-  };
-
+    pickedDate: '',
+    // isAmount: null
+    };
+    console.log(this.props)
+  }
   // For use when autofill is available
   componentWillMount() {
     this.props.usersFetch();
   }
 
   onAccept() {
-    const todaysDate = moment().format("MMMM DD YYYY");
-    const pickedDate = this.state.pickedDate;
-    const momentYYYYMM = moment(pickedDate, "MMMM DD YYYY").format("YYYYMM")
-    const debitProp = this.state.isDebitOrCredit; 
-    const { debitAmount, debitType, debitNote, debitRepeating } = this.props;
-    this.props.userDebitUpdate({ prop: "debitDate", value: this.state.pickedDate })
-    this.props.userDebitCreate({
-      debitProp, 
-      debitAmount,
-      debitDate: pickedDate || todaysDate,
-      debitDateYYYYMM: momentYYYYMM,
-      debitType: debitType || "Groceries", 
-      debitNote,
-      debitRepeating
-    });
-    this.setState({ showConfirmDebitModal: false, showNavModal: true });
-  }
-
+      // todaysDate is useless, just using YYYYMM as the format until it is reformatted for display later 
+      
+      if (!this.state.amountEntered) {
+        this.setState({ isAmount: false, showConfirmDebitModal: !this.state.showConfirmDebitModal, showNavModal: false })
+      } 
+      if (isNaN(this.state.amountEntered)) {
+        this.setState({ amountEntered: null, isAmount: false, showConfirmDebitModal: !this.state.showConfirmDebitModal, showNavModal: false })
+      }
+      else {
+        const todaysDate = moment().format("MMMM DD YYYY");
+        const todaysYYYYMM = moment().format("YYYYMM");
+        const pickedDate = this.state.pickedDate;
+        const debitProp = this.state.isDebitOrCredit; 
+        console.log(todaysDate, todaysYYYYMM)
+        const { debitAmount, debitType, debitNote, debitRepeating } = this.props;
+        this.props.userDebitUpdate({ prop: "debitDate", value: this.state.pickedDate })
+        this.props.userDebitCreate({
+          debitProp, 
+          debitAmount,
+          debitDate: pickedDate || todaysYYYYMM,
+          debitDateYYYYMM: pickedDate || todaysYYYYMM,
+          debitType: debitType || "Groceries", 
+          debitNote,
+          debitRepeating,
+        });
+        this.setState({ showConfirmDebitModal: false, pickedDate: '', showNavModal: true, isAmount: null });
+      }
+    }
+  
   onDecline() {
     this.setState({ showConfirmDebitModal: false });
   }
 
   navToDebit() {
-    this.setState({ showNavModal: false }); 
+    this.setState({ showNavModal: false, amountEntered: null }); 
   }
 
   navToCredit() {
-    this.setState({ showNavModal: false }); 
+    this.setState({ showNavModal: false, amountEntered: null }); 
     Actions.creditPage();
   }
 
@@ -70,8 +84,20 @@ class DebitPage extends Component {
     this.setState({ showNavModal: false });
     Actions.myAccount();
   }
+// this.state.isAmount === null || 
+  renderError() {
+    if (this.state.isAmount === false) {
+      return (
+        <View style={{ backgroundColor: "white" }}>
+          <Text style={styles.errorTextStyle}>"Must enter a Number Amount"</Text>
+        </View>
+      );
+    } 
+  }
 
   render() {
+   console.log(this.state)
+
     return (
         <ImageBackground source={require('../images/gradientsilverbackground.png')} style={{width: '100%', height: '100%'}}>
       <Card>
@@ -80,13 +106,20 @@ class DebitPage extends Component {
             label="Expense Amount" 
             placeholder="Round Up - 54.32 is 55"
             keyboardType="numeric"
-            value={this.props.debitAmount}
-            onChangeText={value =>
+            value={this.state.amountEntered}
+            onChangeText={value => {
+              this.setState({ amountEntered: value});
+              if(isNaN(this.state.amountEntered)) {
+                this.setState({ isAmount: false });
+                // this.props.userDebitUpdate({ prop: "debitAmount", value: null })
+              }
               this.props.userDebitUpdate({ prop: "debitAmount", value })
             }
+            }
+
           />
         </CardSection>
-
+            {this.renderError()}
         <CardSection style={styles.pickerCardSectionStyle}>
             <Text style={styles.textLabelStyle}>Date</Text>
           <DatePicker
@@ -94,7 +127,7 @@ class DebitPage extends Component {
             // date={moment().format('MMMM DD YYYY')}
             mode="date"
             placeholder={this.state.pickedDate ? this.state.pickedDate : "Select Date"}
-            format="MMMM DD YYYY"
+            format="YYYYMM"
             minDate="2018-01-01"
             maxDate="2050-12-31"
             confirmBtnText="Confirm"
@@ -111,7 +144,8 @@ class DebitPage extends Component {
               }
               // ... You can check the source to find the other keys.
             }}
-            onDateChange={(value) => {this.setState({ pickedDate: value })}
+            onDateChange={(value) => {
+              this.setState({ pickedDate: value })}
             }
           />
         </CardSection>
@@ -163,7 +197,9 @@ class DebitPage extends Component {
                 width={360.5}
                 height={65}
                 textSize={22}
-                onPress={() => this.setState({showConfirmDebitModal: !this.state.showConfirmDebitModal})}
+                onPress={() => {
+                  this.setState({showConfirmDebitModal: !this.state.showConfirmDebitModal})
+                }}
                 style={{
                     flex: 1,
                     marginLeft: 0,
@@ -260,11 +296,17 @@ const styles = {
     borderColor: '#a80d10',
     margin: 0,
     height: 65
-}
+  },
+  errorTextStyle: {
+    fontSize: 20,
+    alignSelf: "center",
+    color: "red"
+  }
 };
 
 const mapStateToProps = state => {
   console.log(state);
+
   const { debitProp, debitAmount, debitDate, debitDateYYYYMM, debitType, debitNote, debitRepeating } = state.userForm; 
 
   return { debitProp, debitAmount, debitDate, debitDateYYYYMM, debitType, debitNote, debitRepeating }; 

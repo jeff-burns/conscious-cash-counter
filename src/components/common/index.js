@@ -10,3 +10,4 @@ export * from './Confirm';
 export * from './ConfirmNavModal';
 export * from './ConfirmCompareModal';
 export * from './BudgetInput';
+export * from './ConfirmDelete';

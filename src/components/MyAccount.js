@@ -3,14 +3,23 @@ import { ImageBackground } from 'react-native';
 import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
 import { Actions } from 'react-native-router-flux';
 import { connect } from "react-redux";
-import { logoutUser } from '../actions';
-import { Card, CardSection, Button, NavDebButton, Confirm } from './common';
+import { logoutUser, deleteUser } from '../actions';
+import { Card, CardSection, Button, NavDebButton, Confirm, ConfirmDelete } from './common';
 
 class MyAccount extends Component {
-    state = { showModal: false };
+    state = { 
+        showModal: false,
+        showDeleteModal: false
+             };
 
     onAccept() {
         this.props.logoutUser();
+    }
+
+    onAcceptDelete() {
+        this.setState({ showDeleteModal: false });
+        this.props.deleteUser();
+        
     }
 
     onDecline() {
@@ -175,7 +184,7 @@ class MyAccount extends Component {
                         width={360.5}
                         height={65}
                         textSize={19}
-
+                        onPress={() => this.setState({ showDeleteModal: !this.state.showDeleteModal })}
                         style={{
                             flex: 1,
                             marginLeft: 0,
@@ -188,6 +197,15 @@ class MyAccount extends Component {
                         Delete Account
                     </AwesomeButtonRick>
                 </CardSection>
+
+                <ConfirmDelete
+                    visible={this.state.showDeleteModal}
+                    onAcceptDelete={this.onAcceptDelete.bind(this)}
+                    onDecline={this.onDecline.bind(this)}
+                >
+                    Are you sure you want to Delete Account?
+                </ConfirmDelete>
+
             </Card>
             </ImageBackground>
         );
@@ -222,7 +240,7 @@ const styles = {
         position: 'relative'
       }
 }
-export default connect(null, { logoutUser })(MyAccount);
+export default connect(null, { logoutUser, deleteUser })(MyAccount);
 
 
 // <Button onPress={() => Actions.creditPage()}>

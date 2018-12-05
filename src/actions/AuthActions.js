@@ -53,3 +53,17 @@ export const logoutUser = () => {
         });
     };
 };
+
+export const deleteUser = () => {
+    return () => {
+        let user = firebase.auth().currentUser;
+
+        user.delete()
+        .then(() => {
+            Actions.auth();
+        })
+        // .catch((error) => {
+        // // An error happened.
+        // });
+    }
+};

@@ -1,6 +1,13 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, combineReducers } from "redux";
+// import { reducer as formReducer } from 'redux-form';
 import ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
+
+// const allReducers = {
+//   reducers,
+//   form: formReducer
+// }
+// const reducer = combineReducers(allReducers)
 
 export default function configureStore(initialState) {
     const store = createStore(reducers, initialState, applyMiddleware(ReduxThunk))
