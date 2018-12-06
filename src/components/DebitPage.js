@@ -58,7 +58,7 @@ class DebitPage extends Component {
           debitNote,
           debitRepeating,
         });
-        this.setState({ showConfirmDebitModal: false, pickedDate: '', showNavModal: true, isAmount: null });
+        this.setState({ showConfirmDebitModal: false, pickedDate: '', reformattedPickedDate: '', showNavModal: true, isAmount: null });
       }
     }
   
@@ -105,15 +105,34 @@ class DebitPage extends Component {
           <BudgetInput
             label="Expense Amount" 
             placeholder="Round Up - 54.32 is 55"
-            keyboardType="numeric"
+            // POSSIBLE HELPER FOR TESTING ON DEVICE, UNCOMMENT IT THEN
+            enablesReturnKeyAutomatically={true}
+            // NUMERIC DIDN'T BRING UP THE NUMBERS KEYBOARD SO MAYBE UNCOMMENT THIS THEN TOO
+            keyboardType="number-pad"
+            // keyboardType="numeric"
             value={this.state.amountEntered}
             onChangeText={value => {
-              this.setState({ amountEntered: value});
-              if(isNaN(this.state.amountEntered)) {
-                this.setState({ isAmount: false });
-                // this.props.userDebitUpdate({ prop: "debitAmount", value: null })
-              }
-              this.props.userDebitUpdate({ prop: "debitAmount", value })
+           
+                  console.log(value)
+                  console.log(isNaN(value))
+              if (isNaN(value)) {
+                console.log('error needs a number')
+                this.setState({ isAmount: false, amountEntered: '' });
+
+              } else {
+                  // console.log(parsedValue) 
+                  console.log(value)
+                  this.setState({ isAmount: true, amountEntered: value });
+                  this.props.userDebitUpdate({ prop: "debitAmount", value })
+
+                }
+
+              // this.setState({ amountEntered: value});
+              // if(isNaN(this.state.amountEntered)) {
+              //   this.setState({ isAmount: false });
+              //   // this.props.userDebitUpdate({ prop: "debitAmount", value: null })
+              // }
+              // this.props.userDebitUpdate({ prop: "debitAmount", value })
             }
             }
 
@@ -126,8 +145,8 @@ class DebitPage extends Component {
             style={{ width: 325 }}
             // date={moment().format('MMMM DD YYYY')}
             mode="date"
-            placeholder={this.state.pickedDate ? this.state.pickedDate : "Select Date"}
-            format="YYYYMM"
+            placeholder={this.state.reformattedPickedDate ? this.state.reformattedPickedDate : "Select Date"}
+            format="YYYYMMDD"
             minDate="2018-01-01"
             maxDate="2050-12-31"
             confirmBtnText="Confirm"
@@ -145,7 +164,9 @@ class DebitPage extends Component {
               // ... You can check the source to find the other keys.
             }}
             onDateChange={(value) => {
-              this.setState({ pickedDate: value })}
+              const pickedDate = moment(value, 'YYYYMMDD').format('YYYYMM');
+              const reformattedPickedDate = moment(value, 'YYYYMMDD').format('MMMM DD YYYY');
+              this.setState({ pickedDate, reformattedPickedDate })}
             }
           />
         </CardSection>
