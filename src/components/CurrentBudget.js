@@ -17,8 +17,7 @@ class CurrentBudget extends Component {
 
   render() {
     console.log(this.props.compiledCredDebArrays);
-
-    const arrayOfAllInfo = this.props.compiledCredDebArrays;
+    const arrayOfAllInfo = this.props.compiledCredDebArrays
 
     const currentBudget = () => {
       return <DebitListItem arrayOfAllInfo={arrayOfAllInfo} />;
@@ -81,16 +80,16 @@ const mapStateToProps = reduxState => {
 
   const yearMMKeysDeb = Object.keys(debsGroupByYearMM());
   const newYearMMKeysDeb = yearMMKeysDeb.reverse();
-// IS THIS BELOW A USELESS ARRAY NOW?
+  // IS THIS BELOW A USELESS ARRAY NOW?
   const formattedDebDatesArrObj = newYearMMKeysDeb.map(each => {
-    let slicedYear = parseInt(each.slice(0,4))
-    let slicedMonth = parseInt(each.slice(-2))
-    console.log(each)
+    let slicedYear = parseInt(each.slice(0, 4));
+    let slicedMonth = parseInt(each.slice(-2));
+    console.log(each);
     // function daysInMonth (month, year) { // Use 1 for January, 2 for February, etc.
-      // const daysInMonthDeb = new Date(slicedYear, slicedMonth, 0).getDate().toString();
-      const daysInMonthDeb = new Date(slicedYear, slicedMonth, 0).getDate();
+    // const daysInMonthDeb = new Date(slicedYear, slicedMonth, 0).getDate().toString();
+    const daysInMonthDeb = new Date(slicedYear, slicedMonth, 0).getDate();
 
-    // let formattedDebDate = moment(fixedDateStrings, "YYYYMMDD").format("MMM YYYY");    
+    // let formattedDebDate = moment(fixedDateStrings, "YYYYMMDD").format("MMM YYYY");
     return {
       id: each,
       daysInMonth: daysInMonthDeb
@@ -105,8 +104,10 @@ const mapStateToProps = reduxState => {
     let debitTotalEachYYYYMM = 0;
 
     for (let ii = 0; ii < yyyyMMDeb.length; ii++) {
-      var prettyDateShortened = yyyyMMDeb[ii]['debitDate'].slice(0,4) + yyyyMMDeb[ii]['debitDate'].slice(-4)
-        console.log(prettyDateShortened)
+      var prettyDateShortened =
+        yyyyMMDeb[ii]["debitDate"].slice(0, 4) +
+        yyyyMMDeb[ii]["debitDate"].slice(-4);
+      console.log(prettyDateShortened);
 
       debitTotalEachYYYYMM += parseInt(yyyyMMDeb[ii].debitAmount);
     }
@@ -147,19 +148,18 @@ const mapStateToProps = reduxState => {
   const newYearMMKeysCred = yearMMKeysCred.reverse();
 
   const formattedCredDatesArrObj = newYearMMKeysCred.map(each => {
-    let slicedYear = parseInt(each.slice(0,4))
-    let slicedMonth = parseInt(each.slice(-2))
-    console.log(each)
+    let slicedYear = parseInt(each.slice(0, 4));
+    let slicedMonth = parseInt(each.slice(-2));
+    console.log(each);
     // function daysInMonth (month, year) { // Use 1 for January, 2 for February, etc.
-      const daysInMonthCred = new Date(slicedYear, slicedMonth, 0).getDate();
-    
-    // let formattedDebDate = moment(fixedDateStrings, "YYYYMMDD").format("MMM YYYY");    
+    const daysInMonthCred = new Date(slicedYear, slicedMonth, 0).getDate();
+
+    // let formattedDebDate = moment(fixedDateStrings, "YYYYMMDD").format("MMM YYYY");
     return {
       id: each,
       daysInMonth: daysInMonthCred
     };
   });
-
 
   //   let formattedCredDate = moment(each, "YYYY-MM").format("MMM YYYY");
   //   return {
@@ -176,8 +176,10 @@ const mapStateToProps = reduxState => {
     let creditTotalEachYYYYMM = 0;
 
     for (let ii = 0; ii < yyyyMMCred.length; ii++) {
-      var prettyDateShortened = yyyyMMCred[ii]['creditDate'].slice(0,4) + yyyyMMCred[ii]['creditDate'].slice(-4)
-        console.log(prettyDateShortened)
+      var prettyDateShortened =
+        yyyyMMCred[ii]["creditDate"].slice(0, 4) +
+        yyyyMMCred[ii]["creditDate"].slice(-4);
+      console.log(prettyDateShortened);
       creditTotalEachYYYYMM += parseInt(yyyyMMCred[ii].creditAmount);
     }
 
@@ -194,9 +196,10 @@ const mapStateToProps = reduxState => {
   });
 
   const compiledCredDebArrays = [];
+
   if (compiledDebArray.length > 0 && compiledCredArray.length === 0) {
     //  compiledCredDebArrays.push(compiledDebArray)
-     compiledDebArray.forEach((itm, i) => {
+    compiledDebArray.forEach((itm, i) => {
       compiledCredDebArrays.push(Object.assign({}, itm, compiledCredArray[i]));
     });
   } else {
@@ -204,7 +207,7 @@ const mapStateToProps = reduxState => {
       compiledCredDebArrays.push(Object.assign({}, itm, compiledDebArray[i]));
     });
   }
-  
+  console.log(compiledCredDebArrays);
 
   // END OF BUDGET LOGIC
   // NEED TO ACCOUNT FOR NEITHER BEING CREATED???????!!!!!!!!
@@ -214,18 +217,33 @@ const mapStateToProps = reduxState => {
   //   }
   //   if (compiledCredArray.length > 0 && compiledDebArray.length === 0) {
   //      { compiledCredArray, compiledCredDebArrays };
-  //   } 
+  //   }
   //   if (compiledCredArray.length > 0 && compiledDebArray.length > 0)
   //   {
   //      {  compiledDebArray, compiledCredArray, compiledCredDebArrays };
   //   }
-  
 
-  return { compiledCredDebArrays }
-  }
-
+  return { compiledCredDebArrays };
+};
 
 export default connect(
   mapStateToProps,
   { usersFetch }
 )(CurrentBudget);
+
+// const dateIdToday = moment().format("YYYYMMDD").slice(-2);
+// const formattedDateToday = moment(dateIdToday, "YYYYMMDD").format("MMM YYYY");
+// const arrayOfAllInfo = () => {
+//   if (this.props.compiledDebArray.length == 0 && this.props.compiledCredArray.length == 0) {
+//     console.log('got in here!')
+//                      [{
+//                         id: dateIdToday,
+//                         formattedDate: formattedDateToday,
+//                         credMonthTotal: 0,
+//                         debMonthTotal: 0,
+//                         daysInMonth: 30
+//                       }]
+//   } else {
+//      this.props.compiledCredDebArrays;
+//   }
+// }

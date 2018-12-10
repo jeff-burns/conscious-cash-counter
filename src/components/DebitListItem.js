@@ -13,7 +13,7 @@ class DebitListItem extends Component {
         console.log(todayNumber)
         const thisMonth = moment().format('MMMM')
         const daysLeft = neededArray.daysInMonth - todayNumber
-        console.log(todayNumber, neededArray.daysInMonth, daysLeft)
+        // console.log(todayNumber, neededArray.daysInMonth, daysLeft)
         const incomeTotal = neededArray.credMonthTotal
         const expenseTotal = neededArray.debMonthTotal
         const dollarsLeftTotal = 

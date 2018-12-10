@@ -1,16 +1,26 @@
+import _ from "lodash";
 import React, { Component } from 'react';
 import { ImageBackground } from 'react-native';
 import AwesomeButtonRick from 'react-native-really-awesome-button/src/themes/rick';
 import { Actions } from 'react-native-router-flux';
 import { connect } from "react-redux";
-import { logoutUser, deleteUser } from '../actions';
+import { usersFetch, logoutUser, deleteUser } from '../actions';
 import { Card, CardSection, Button, NavDebButton, Confirm, ConfirmDelete } from './common';
 
 class MyAccount extends Component {
-    state = { 
+    constructor(props) {
+        super(props);
+        this.state = { 
         showModal: false,
         showDeleteModal: false
-             };
+        };
+    console.log(this.props);
+  }
+
+  componentWillMount() {
+    this.props.usersFetch();
+
+  }
 
     onAccept() {
         this.props.logoutUser();
@@ -26,7 +36,15 @@ class MyAccount extends Component {
         this.setState({ showModal: false });
     }
 
+    onPressWithNoData() {
+        alert('Must Enter Debit and Credit First')
+    }
+
     render() {
+        console.log(this.props)
+        const user = this.props.userData 
+        console.log(this.state)
+
         return (
             <ImageBackground source={require('../images/gradientsilverbackground.png')} style={{width: '100%', height: '100%'}}>
             <Card style={styles.cardStyle}>
@@ -45,7 +63,8 @@ class MyAccount extends Component {
                         width={360.5}
                         height={65}
                         textSize={19}
-                        onPress={() => Actions.currentBudget()}
+                        // onPress={() => Actions.currentBudget()}
+                        onPress={(user.length == 0) ? this.onPressWithNoData.bind(this) : () => Actions.currentBudget()}
                         style={{
                             flex: 1,
                             marginLeft: 0,
@@ -71,7 +90,7 @@ class MyAccount extends Component {
                         width={360.5}
                         height={65}
                         textSize={19}
-                        onPress={() => Actions.compareMonths()}
+                        onPress={(user.length == 0) ? this.onPressWithNoData.bind(this) : () => Actions.compareMonths()}
                         style={{
                             flex: 1,
                             marginLeft: 0,
@@ -237,7 +256,47 @@ const styles = {
         position: 'relative'
       }
 }
-export default connect(null, { logoutUser, deleteUser })(MyAccount);
+
+const mapStateToProps = state => {
+    console.log(state.users);
+    const userObjects = state.users
+    const userData = _.map(userObjects, val => {
+        return { ...val };
+      });
+      console.log(userData);
+
+    // if (this.props.users) {
+    //     this.setState({ userData: true })
+    // } else {
+    //     this.setState({ userData: false })
+    // }
+
+    // const {
+    //   debitProp,
+    //   debitAmount,
+    //   debitDate,
+    //   debitDateYYYYMM,
+    //   debitType,
+    //   debitNote,
+    //   debitRepeating
+    // } = state.userForm;
+  
+    // return {
+    //   debitProp,
+    //   debitAmount,
+    //   debitDate,
+    //   debitDateYYYYMM,
+    //   debitType,
+    //   debitNote,
+    //   debitRepeating
+    // };
+    return { userData }
+  };
+export default connect(mapStateToProps, { usersFetch, logoutUser, deleteUser })(MyAccount);
+
+
+
+// onPress={(userData) ? () => Actions.currentBudget() : this.onDecline.bind(this)}
 
 
 // <Button onPress={() => Actions.creditPage()}>
