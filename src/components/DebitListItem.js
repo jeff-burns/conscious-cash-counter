@@ -7,15 +7,19 @@ class DebitListItem extends Component {
     
     render() {
         console.log(this.props)
+        
         const neededArray = this.props.arrayOfAllInfo[0]
-        const todayNumber = moment().format('DD')
+        const todayNumber = parseInt(moment().format('DD'))
+        console.log(todayNumber)
         const thisMonth = moment().format('MMMM')
         const daysLeft = neededArray.daysInMonth - todayNumber
+        console.log(todayNumber, neededArray.daysInMonth, daysLeft)
         const incomeTotal = neededArray.credMonthTotal
         const expenseTotal = neededArray.debMonthTotal
-        const dollarsLeftTotal = neededArray.credMonthTotal - neededArray.debMonthTotal
-        const dollarsPerDayLeft = Math.floor(dollarsLeftTotal / daysLeft)
-        console.log(todayNumber, daysLeft, neededArray.daysInMonth)
+        const dollarsLeftTotal = 
+            neededArray.credMonthTotal - neededArray.debMonthTotal
+        const dollarsPerDayLeft = 
+            Math.floor(dollarsLeftTotal / daysLeft)
 
         return (
             <Card style={{ backgroundColor: 'rgba(255,255,255,0.01)' }}>    
@@ -33,7 +37,7 @@ class DebitListItem extends Component {
                         </CardSection>
                         <CardSection style={styles.bottomCardsectionStyle}>
                             <Text style={styles.textStyle}>
-                                ${incomeTotal}
+                                ${(neededArray['credMonthTotal']) ? incomeTotal : 'N/A'}
                             </Text>
                         </CardSection>
                     </Card>
@@ -43,7 +47,7 @@ class DebitListItem extends Component {
                         </CardSection>
                         <CardSection style={styles.bottomCardsectionStyle}>
                             <Text style={styles.textStyle}>
-                                ${expenseTotal}
+                                ${(neededArray['debMonthTotal']) ? expenseTotal : 'N/A'}
                             </Text>
                         </CardSection>
                     </Card>
@@ -55,7 +59,7 @@ class DebitListItem extends Component {
                     </CardSection>
                     <CardSection style={styles.bottomCardsectionStyle}>
                         <Text style={styles.textStyle}>
-                            ${dollarsLeftTotal}
+                            ${(!neededArray.credMonthTotal || !neededArray.debMonthTotal) ? 'N/A': dollarsLeftTotal}
                         </Text>
                     </CardSection>
                 </Card>
@@ -77,7 +81,7 @@ class DebitListItem extends Component {
                     </CardSection>
                     <CardSection style={styles.bottomCardsectionStyle}>
                         <Text style={styles.textStyle}>
-                            ${(daysLeft == 0) ? dollarsLeftTotal : (dollarsLeftTotal == 0) ? 0 : dollarsPerDayLeft }
+                            ${(daysLeft == 0) ? dollarsLeftTotal : (dollarsLeftTotal == 0) ? 0 : (isNaN(dollarsLeftTotal)) ? 'N/A' : dollarsPerDayLeft }
                         </Text>
                     </CardSection>
                 </Card>

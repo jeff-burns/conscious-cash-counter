@@ -35,8 +35,10 @@ class MyAccount extends Component {
                     <AwesomeButtonRick 
                         type="anchor"
                         backgroundColor="#302E3C"
-                        // colors darken in descending order
-                        textColor="#FAE822"
+                        // colors darken in descending order FFFFFF
+                        // textColor="#FAE822"
+                        textColor="#FFFFFF"
+
                         borderColor="#FAE822"
                         backgroundDarker="#E1CF09"
                         backgroundShadow= '#AFA107'
@@ -48,9 +50,6 @@ class MyAccount extends Component {
                             flex: 1,
                             marginLeft: 0,
                             padding: 0,
-                            // backgroundShadow: '#007aff',
-                            // textShadowOffset: { width: 0, height: 2},
-                            // textShadowColor: "#7F0000"
                         }}
                     >
                         View Current Budget
@@ -63,7 +62,9 @@ class MyAccount extends Component {
                         type="anchor"
                         backgroundColor="#302E3C"
                         // colors darken in descending order
-                        textColor="#AC37FB"
+                        // textColor="#AC37FB"
+                        textColor="#FFFFFF"
+
                         borderColor="#AC37FB"
                         backgroundDarker="#8804E1"
                         backgroundShadow= '#6A03AF'
@@ -75,9 +76,6 @@ class MyAccount extends Component {
                             flex: 1,
                             marginLeft: 0,
                             padding: 0,
-                            // backgroundShadow: '#007aff',
-                            // textShadowOffset: { width: 0, height: 2},
-                            // textShadowColor: "#7F0000"
                         }}
                     >
                         Compare Months
@@ -90,7 +88,9 @@ class MyAccount extends Component {
                         type="anchor"
                         backgroundColor="#302E3C"
                         // colors darken in descending order
-                        textColor="#CC0000"
+                        // textColor="#CC0000"
+                        textColor="#FFFFFF"
+
                         borderColor="#CC0000"
                         backgroundDarker="#7F0000"
                         backgroundShadow= '#990000'
@@ -102,9 +102,6 @@ class MyAccount extends Component {
                             flex: 1,
                             marginLeft: 0,
                             padding: 0,
-                            // backgroundShadow: '#007aff',
-                            // textShadowOffset: { width: 0, height: 2},
-                            // textShadowColor: "#7F0000"
                         }}
                     >
                         Debit Page
@@ -117,7 +114,9 @@ class MyAccount extends Component {
                         type="anchor"
                         backgroundColor="#302E3C"
                         // colors darken in descending order
-                        textColor="#21EB1A"
+                        // textColor="#21EB1A"
+                        textColor="#FFFFFF"
+
                         borderColor="#21EB1A"
                         backgroundDarker="#17A412"
                         backgroundShadow="#0D5E0A"
@@ -129,9 +128,6 @@ class MyAccount extends Component {
                             flex: 1,
                             marginLeft: 0,
                             padding: 0,
-                            // backgroundShadow: '#007aff',
-                            // textShadowOffset: { width: 0, height: 2},
-                            // textShadowColor: "#7F0000"
                         }}
                     >
                         Credit Page
@@ -144,7 +140,9 @@ class MyAccount extends Component {
                         type="anchor"
                         backgroundColor="#302E3C"
                         // colors darken in descending order
-                        textColor="#2649F6"
+                        // textColor="#2649F6"
+                        textColor="#FFFFFF"
+
                         borderColor="#2649F6"
                         backgroundDarker="#0C2FDC"
                         backgroundShadow= "#1736D3"
@@ -156,9 +154,6 @@ class MyAccount extends Component {
                             flex: 1,
                             marginLeft: 0,
                             padding: 0,
-                            // backgroundShadow: '#007aff',
-                            // textShadowOffset: { width: 0, height: 2},
-                            // textShadowColor: "#7F0000"
                         }}
                     >
                         Logout
@@ -177,7 +172,9 @@ class MyAccount extends Component {
                     <AwesomeButtonRick 
                         type="anchor"
                         backgroundColor="#302E3C"
-                        textColor="#FA720A"
+                        // textColor="#FA720A"
+                        textColor="#FFFFFF"
+
                         borderColor="#FA720A"
                         backgroundDarker="#E16609"
                         backgroundShadow="#964406"

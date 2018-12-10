@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, ImageBackground } from "react-native";
+import { View, Text, ImageBackground, KeyboardAvoidingView } from "react-native";
 import AwesomeButtonBlue from 'react-native-really-awesome-button/src/themes/blue';
 import { connect } from "react-redux";
 import { emailChanged, passwordChanged, loginUser } from "../actions";
@@ -65,6 +65,7 @@ class LoginForm extends Component {
       <Card style={{ height: '35%', backgroundColor: 'rgba(255,255,255,0.01, )', display: "flex",
       justifyContent: 'space-around',
       alignItems: 'center' }}>
+      
         <CardSection style={styles.cardSectionStyle}>
           <Input
             label="Email"
@@ -73,6 +74,7 @@ class LoginForm extends Component {
             value={this.props.email}
           />
         </CardSection>
+
         <CardSection style={styles.cardSectionStyle}>
           <Input
             secureTextEntry

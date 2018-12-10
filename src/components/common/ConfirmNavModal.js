@@ -27,7 +27,9 @@ const ConfirmNavModal = ({
                     <AwesomeButtonRick 
                         type="anchor"
                         backgroundColor="#302E3C"
-                        textColor="#CC0000"
+                        // textColor="#CC0000"
+                        textColor="#FFFFFF"
+
                         borderColor="#CC0000"
                         backgroundDarker="#7F0000"
                         backgroundShadow= '#990000'
@@ -51,7 +53,9 @@ const ConfirmNavModal = ({
                         type="anchor"
                         backgroundColor="#302E3C"
                         // colors darken in descending order
-                        textColor="#21EB1A"
+                        // textColor="#21EB1A"
+                        textColor="#FFFFFF"
+
                         borderColor="#21EB1A"
                         backgroundDarker="#17A412"
                         backgroundShadow="#0D5E0A"
@@ -75,7 +79,9 @@ const ConfirmNavModal = ({
                         type="anchor"
                         backgroundColor="#302E3C"
                         // colors darken in descending order
-                        textColor="#FAE822"
+                        // textColor="#FAE822"
+                        textColor="#FFFFFF"
+
                         borderColor="#FAE822"
                         backgroundDarker="#E1CF09"
                         backgroundShadow= '#AFA107'
@@ -99,7 +105,9 @@ const ConfirmNavModal = ({
                         type="anchor"
                         backgroundColor="#302E3C"
                         // colors darken in descending order
-                        textColor="#C4C6C7"
+                        // textColor="#C4C6C7"
+                        textColor="#FFFFFF"
+
                         borderColor="#C4C6C7"
                         backgroundDarker="#989A9B"
                         backgroundShadow= '#6D6E6F'
